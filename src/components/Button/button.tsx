@@ -33,12 +33,15 @@ type AnchorButtonProps = BaseButtonProps &
 // 最终按钮类型 Partial(将类型定义的所有属性都修改为可选)
 export type ButtonProps = Partial<NativeButtonProps & AnchorButtonProps>
 
-const Button: React.FC<ButtonProps> = (
-  props = { disabled: false, btnType: ButtonType.Default } // 默认值
-) => {
-  const { btnType, className, disabled, size, children, href, ...restProps } =
-    props
-
+const Button: React.FC<ButtonProps> = ({
+  btnType = ButtonType.Default,
+  className,
+  disabled = false,
+  size,
+  children,
+  href,
+  ...restProps
+}) => {
   // btn, btn-lg, btn-primary
   const classes = classNames('btn', className, {
     [`btn-${btnType}`]: btnType,
