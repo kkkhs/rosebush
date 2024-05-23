@@ -48,11 +48,9 @@ function App() {
 
         <h3>菜单</h3>
         <div>
-          <Menu defaultIndex={0} onSelect={(index) => console.log(index)}>
+          <Menu onSelect={(index) => console.log(index)}>
             <MenuItem> cool link</MenuItem>
-            <MenuItem index={1} disabled>
-              cool link 1
-            </MenuItem>
+            <MenuItem disabled>cool link 1</MenuItem>
             <SubMenu title="123">
               <MenuItem>dropdown 1</MenuItem>
               <MenuItem>dropdown 2</MenuItem>
@@ -62,8 +60,8 @@ function App() {
 
           <Menu
             mode="vertical"
-            defaultIndex={0}
             onSelect={(index) => console.log(index)}
+            defaultOpenSubMenus={['2']}
           >
             <MenuItem> cool link</MenuItem>
             <MenuItem disabled>cool link 1</MenuItem>
