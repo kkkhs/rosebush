@@ -1,7 +1,8 @@
 import Button, { ButtonType, ButtonSize } from './components/Button/button'
 import Alert from './components/Alert/alert'
 import Menu from './components/Menu/menu'
-import MenuItem from './components/Menu/menuitem'
+import MenuItem from './components/Menu/menuItem'
+import SubMenu from './components/Menu/subMenu'
 
 function App() {
   return (
@@ -48,22 +49,29 @@ function App() {
         <h3>菜单</h3>
         <div>
           <Menu defaultIndex={0} onSelect={(index) => console.log(index)}>
-            <MenuItem index={0}> cool link</MenuItem>
+            <MenuItem> cool link</MenuItem>
             <MenuItem index={1} disabled>
               cool link 1
             </MenuItem>
-            <MenuItem index={2}> cool link 2</MenuItem>
+            <SubMenu title="123">
+              <MenuItem>dropdown 1</MenuItem>
+              <MenuItem>dropdown 2</MenuItem>
+            </SubMenu>
+            <MenuItem> cool link 2</MenuItem>
           </Menu>
+
           <Menu
             mode="vertical"
             defaultIndex={0}
             onSelect={(index) => console.log(index)}
           >
-            <MenuItem index={0}> cool link</MenuItem>
-            <MenuItem index={1} disabled>
-              cool link 1
-            </MenuItem>
-            <MenuItem index={2}> cool link 2</MenuItem>
+            <MenuItem> cool link</MenuItem>
+            <MenuItem disabled>cool link 1</MenuItem>
+            <SubMenu title="123">
+              <MenuItem>dropdown 1</MenuItem>
+              <MenuItem>dropdown 2</MenuItem>
+            </SubMenu>
+            <MenuItem> cool link 2</MenuItem>
           </Menu>
         </div>
         <hr />

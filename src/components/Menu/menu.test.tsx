@@ -6,7 +6,7 @@ import {
 } from '@testing-library/react'
 
 import Menu, { MenuProps } from './menu'
-import MenuItem from './menuitem'
+import MenuItem from './menuItem'
 
 const testProps: MenuProps = {
   defaultIndex: 0,
