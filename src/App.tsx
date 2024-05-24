@@ -3,6 +3,8 @@ import Alert from './components/Alert/alert'
 import Menu from './components/Menu/menu'
 import MenuItem from './components/Menu/menuItem'
 import SubMenu from './components/Menu/subMenu'
+import Tabs from './components/Tabs/tabs'
+import TabItem from './components/Tabs/tabItem'
 
 function App() {
   return (
@@ -35,7 +37,6 @@ function App() {
           </Button>
         </div>
         <hr />
-
         <h3>警告</h3>
         <div>
           <Alert title="danger" type={'danger'} showClose={false} />
@@ -43,9 +44,7 @@ function App() {
           <Alert title="success" type={'success'} showClose={false} />
           <Alert title="默认" description="123" />
         </div>
-
         <hr />
-
         <h3>菜单</h3>
         <div>
           <Menu onSelect={(index) => console.log(index)}>
@@ -73,6 +72,23 @@ function App() {
           </Menu>
         </div>
         <hr />
+        <h3>Tabs</h3>
+        <Tabs defaultIndex={0} onSelect={(index) => console.log(index)}>
+          <TabItem label="card1" disabled>
+            this is card one
+          </TabItem>
+          <TabItem label="card2">this is content two</TabItem>
+          <TabItem label="disabled">this is content three</TabItem>
+        </Tabs>
+        <Tabs
+          defaultIndex={0}
+          onSelect={(index) => console.log(index)}
+          type="card"
+        >
+          <TabItem label="card1">this is card one</TabItem>
+          <TabItem label="card2">this is content two</TabItem>
+          <TabItem label="disabled">this is content three</TabItem>
+        </Tabs>
       </header>
     </div>
   )
