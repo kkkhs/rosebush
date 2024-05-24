@@ -5,6 +5,13 @@ import MenuItem from './components/Menu/menuItem'
 import SubMenu from './components/Menu/subMenu'
 import Tabs from './components/Tabs/tabs'
 import TabItem from './components/Tabs/tabItem'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCoffee } from '@fortawesome/free-solid-svg-icons'
+import Icon from './components/Icon/icon'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { fas } from '@fortawesome/free-solid-svg-icons'
+
+library.add(fas)
 
 function App() {
   return (
@@ -13,6 +20,7 @@ function App() {
         className="App-header"
         style={{ marginLeft: '20px', marginRight: '20px' }}
       >
+        <FontAwesomeIcon icon={faCoffee} />
         <h3>按钮</h3>
         <div>
           <Button btnType={ButtonType.Default} autoFocus>
@@ -73,22 +81,26 @@ function App() {
         </div>
         <hr />
         <h3>Tabs</h3>
-        <Tabs defaultIndex={0} onSelect={(index) => console.log(index)}>
-          <TabItem label="card1" disabled>
-            this is card one
-          </TabItem>
-          <TabItem label="card2">this is content two</TabItem>
-          <TabItem label="disabled">this is content three</TabItem>
-        </Tabs>
-        <Tabs
-          defaultIndex={0}
-          onSelect={(index) => console.log(index)}
-          type="card"
-        >
-          <TabItem label="card1">this is card one</TabItem>
-          <TabItem label="card2">this is content two</TabItem>
-          <TabItem label="disabled">this is content three</TabItem>
-        </Tabs>
+        <div>
+          <Tabs defaultIndex={0} onSelect={(index) => console.log(index)}>
+            <TabItem label="card1" disabled>
+              this is card one
+            </TabItem>
+            <TabItem label="card2">this is content two</TabItem>
+            <TabItem label="disabled">this is content three</TabItem>
+          </Tabs>
+          <Tabs
+            defaultIndex={0}
+            onSelect={(index) => console.log(index)}
+            type="card"
+          >
+            <TabItem label="card1">this is card one</TabItem>
+            <TabItem label="card2">this is content two</TabItem>
+            <TabItem label="disabled">this is content three</TabItem>
+          </Tabs>
+        </div>
+        <h3>Icon</h3>
+        <Icon icon="coffee" theme="danger" size="xl"></Icon>
       </header>
     </div>
   )

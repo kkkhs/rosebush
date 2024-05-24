@@ -44,12 +44,12 @@
   }
   .is-vertical {
     .arrow-icon {
-      transform: rotate(0deg) !important;
+      transform: rotate(0deg) !important; // 覆盖hover
     }
   }
   .is-vertical.is-opened {
     .arrow-icon {
-      transform: rotate(180deg) !important;
+      transform: rotate(180deg) !important; // 覆盖hover
     }
   }
   .rose-submenu {
