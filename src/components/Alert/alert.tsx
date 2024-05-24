@@ -8,6 +8,8 @@
 
 import classNames from 'classnames'
 import { FC, useState } from 'react'
+import Icon from '../Icon/icon'
+import Transition from '../Transition/transition'
 
 export type AlertType = 'success' | 'default' | 'danger' | 'warning'
 
@@ -48,15 +50,17 @@ const Alert: FC<AlertProps> = ({
   }
 
   return (
-    <div className={classes}>
-      <span className={titleClass}>{title}</span>
-      {description && <p className="rose-alert-desc">{description}</p>}
-      {showClose && (
-        <span className="rose-alert-close" onClick={handleClose}>
-          {'x'}
-        </span>
-      )}
-    </div>
+    <Transition in={!hide} timeout={300} animation="zoom-in-right">
+      <div className={classes}>
+        <span className={titleClass}>{title}</span>
+        {description && <p className="rose-alert-desc">{description}</p>}
+        {showClose && (
+          <span className="rose-alert-close" onClick={handleClose}>
+            <Icon icon={'close'} />
+          </span>
+        )}
+      </div>
+    </Transition>
   )
 }
 

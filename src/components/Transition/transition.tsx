@@ -10,6 +10,7 @@ type AnimationName =
 type TransitionProps = CSSTransitionProps & {
   animation?: AnimationName
   wrapper?: boolean
+  children?: React.ReactNode
 }
 
 const Transition: React.FC<TransitionProps> = ({
@@ -25,7 +26,7 @@ const Transition: React.FC<TransitionProps> = ({
       {...restProps}
     >
       {/* 防止子元素transiton属性重叠 */}
-      {wrapper ? <div>children</div> : children}
+      {wrapper ? <div>{children}</div> : children}
     </CSSTransition>
   )
 }
