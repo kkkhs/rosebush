@@ -16,6 +16,7 @@ const Transition: React.FC<TransitionProps> = ({
   children,
   classNames,
   animation,
+  wrapper,
   ...restProps
 }) => {
   return (
@@ -23,7 +24,8 @@ const Transition: React.FC<TransitionProps> = ({
       classNames={classNames ? classNames : animation}
       {...restProps}
     >
-      {children}
+      {/* 防止子元素transiton属性重叠 */}
+      {wrapper ? <div>children</div> : children}
     </CSSTransition>
   )
 }

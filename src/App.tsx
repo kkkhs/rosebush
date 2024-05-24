@@ -1,4 +1,4 @@
-import Button, { ButtonType, ButtonSize } from './components/Button/button'
+import Button from './components/Button/button'
 import Alert from './components/Alert/alert'
 import Menu from './components/Menu/menu'
 import MenuItem from './components/Menu/menuItem'
@@ -23,24 +23,20 @@ function App() {
         <FontAwesomeIcon icon={faCoffee} />
         <h3>按钮</h3>
         <div>
-          <Button btnType={ButtonType.Default} autoFocus>
+          <Button btnType="default" autoFocus>
             Button
           </Button>
           <Button disabled>Disabled Button</Button>
-          <Button btnType={ButtonType.Primary} size={ButtonSize.Large}>
+          <Button btnType="primary" size="lg">
             Large Primary
           </Button>
-          <Button btnType={ButtonType.Danger} size={ButtonSize.Small}>
+          <Button btnType="danger" size="sm">
             Small Danger
           </Button>
-          <Button btnType={ButtonType.Link} href="http://www.baidu.com">
+          <Button btnType="link" href="http://www.baidu.com">
             Baidu Link
           </Button>
-          <Button
-            btnType={ButtonType.Link}
-            href="http://www.baidu.com"
-            disabled
-          >
+          <Button btnType="link" href="http://www.baidu.com" disabled>
             Disabled Link
           </Button>
         </div>
