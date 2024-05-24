@@ -1,17 +1,7 @@
 import classNames from 'classnames'
 
-// 枚举类型
-export enum ButtonSize {
-  Large = 'lg',
-  Small = 'sm',
-}
-
-export enum ButtonType {
-  Primary = 'primary',
-  Default = 'default',
-  Danger = 'danger',
-  Link = 'link',
-}
+export type ButtonSize = 'lg' | 'sm'
+export type ButtonType = 'primary' | 'default' | 'danger' | 'link'
 
 interface BaseButtonProps {
   className?: string
@@ -34,7 +24,7 @@ type AnchorButtonProps = BaseButtonProps &
 export type ButtonProps = Partial<NativeButtonProps & AnchorButtonProps>
 
 const Button: React.FC<ButtonProps> = ({
-  btnType = ButtonType.Default,
+  btnType = 'default',
   className,
   disabled = false,
   size,
@@ -46,10 +36,10 @@ const Button: React.FC<ButtonProps> = ({
   const classes = classNames('btn', className, {
     [`btn-${btnType}`]: btnType,
     [`btn-${size}`]: size,
-    disabled: btnType === ButtonType.Link && disabled, // 如果是a链接, 则将disabled添加到class
+    disabled: btnType === 'link' && disabled, // 如果是a链接, 则将disabled添加到class
   })
 
-  if (btnType === ButtonType.Link && href) {
+  if (btnType === 'link' && href) {
     return (
       <a className={classes} href={href} {...restProps}>
         {children}
