@@ -45,6 +45,8 @@ export type ButtonProps = Partial<NativeButtonProps & AnchorButtonProps>
  * ```javascript
  * import { Button } from 'rosebush'
  * ```
+ *
+ * ### 组件展示
  */
 const Button = ({
   btnType = 'default',
