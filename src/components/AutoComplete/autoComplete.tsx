@@ -1,6 +1,7 @@
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import Input, { InputProps } from '../Input/input'
 import Icon from '../Icon/icon'
+import useDebounce from '../../hooks/useDebounce'
 
 // 来源数据的类型
 interface DataSourceObject {
@@ -31,15 +32,14 @@ export const AutoComplete = ({
   renderOption,
   ...restProps
 }: AutoCompleteProps) => {
-  const [inputValue, setInputValue] = useState(value)
+  const [inputValue, setInputValue] = useState(value as string)
   const [suggestions, setSuggestions] = useState<DataSourceType[]>([])
   const [loading, setLoading] = useState(false)
+  const debouncedValue = useDebounce(inputValue, 500)
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.trim()
-    setInputValue(value)
-    if (value) {
-      const result = fetchSuggestions(value)
+  useEffect(() => {
+    if (debouncedValue) {
+      const result = fetchSuggestions(debouncedValue)
       if (result instanceof Promise) {
         setLoading(true)
         result.then((data) => {
@@ -52,6 +52,11 @@ export const AutoComplete = ({
     } else {
       setSuggestions([])
     }
+  }, [debouncedValue])
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.trim()
+    setInputValue(value)
   }
 
   const handleSelect = (item: DataSourceType) => {
