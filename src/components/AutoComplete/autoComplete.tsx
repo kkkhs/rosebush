@@ -1,7 +1,8 @@
-import { ChangeEvent, useEffect, useState } from 'react'
+import { ChangeEvent, useEffect, useState, KeyboardEvent } from 'react'
 import Input, { InputProps } from '../Input/input'
 import Icon from '../Icon/icon'
 import useDebounce from '../../hooks/useDebounce'
+import classNames from 'classnames'
 
 // 来源数据的类型
 interface DataSourceObject {
@@ -35,8 +36,11 @@ export const AutoComplete = ({
   const [inputValue, setInputValue] = useState(value as string)
   const [suggestions, setSuggestions] = useState<DataSourceType[]>([])
   const [loading, setLoading] = useState(false)
+  const [highlightIndex, setHighlightIndex] = useState(-1)
+
   const debouncedValue = useDebounce(inputValue, 500)
 
+  // 搜索框 onChange 时发生
   useEffect(() => {
     if (debouncedValue) {
       const result = fetchSuggestions(debouncedValue)
@@ -52,7 +56,39 @@ export const AutoComplete = ({
     } else {
       setSuggestions([])
     }
+    setHighlightIndex(-1)
   }, [debouncedValue])
+
+  const highlight = (index: number) => {
+    if (index < 0) index = 0
+    if (index >= suggestions.length) {
+      index = suggestions.length - 1
+    }
+    setHighlightIndex(index)
+  }
+
+  // 支持键盘
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    switch (e.keyCode) {
+      case 13: // enter
+        if (suggestions[highlightIndex]) {
+          handleSelect(suggestions[highlightIndex])
+        }
+        break
+      case 38: // 上
+        console.log(e.key)
+        highlight(highlightIndex - 1)
+        break
+      case 40: // 下
+        highlight(highlightIndex + 1)
+        break
+      case 27: // esc
+        setSuggestions([])
+        break
+      default:
+        break
+    }
+  }
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.trim()
@@ -75,8 +111,15 @@ export const AutoComplete = ({
     return (
       <ul>
         {suggestions.map((item, index) => {
+          const cnames = classNames('suggestion-item', {
+            'item-highlighted': index === highlightIndex,
+          })
           return (
-            <li key={index} onClick={() => handleSelect(item)}>
+            <li
+              key={index}
+              className={cnames}
+              onClick={() => handleSelect(item)}
+            >
               {renderTemplate(item)}
             </li>
           )
@@ -86,7 +129,12 @@ export const AutoComplete = ({
   }
   return (
     <div className="rose-auto-complete">
-      <Input value={inputValue} onChange={handleChange} {...restProps} />
+      <Input
+        value={inputValue}
+        onChange={handleChange}
+        onKeyDown={handleKeyDown}
+        {...restProps}
+      />
       {loading && (
         <ul>
           <Icon icon="spinner" spin />
