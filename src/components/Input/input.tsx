@@ -58,6 +58,17 @@ export const Input = ({
     'input-group-prepend': !!prepend,
   })
 
+  const fixControlledValue = (value: any) => {
+    if (typeof value === 'undefined' || value === null) {
+      return ''
+    }
+    return value
+  }
+  if ('value' in restProps) {
+    delete restProps.defaultValue // 防止同时是受控组件和非受控组件
+    restProps.value = fixControlledValue(restProps.value) // 防止value为undefined或null
+  }
+
   return (
     <div className={classes} style={style}>
       {prepend && <div className="rose-input-group-prepend">{prepend}</div>}
