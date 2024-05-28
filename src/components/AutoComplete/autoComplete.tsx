@@ -3,6 +3,7 @@ import Input, { InputProps } from '../Input/input'
 import Icon from '../Icon/icon'
 import useDebounce from '../../hooks/useDebounce'
 import classNames from 'classnames'
+import useClickOutside from '../../hooks/useClickOutside'
 
 // 来源数据的类型
 interface DataSourceObject {
@@ -38,8 +39,12 @@ export const AutoComplete = ({
   const [loading, setLoading] = useState(false)
   const [highlightIndex, setHighlightIndex] = useState(-1)
   const triggerSearch = useRef(false)
+  const componentRef = useRef<HTMLDivElement>(null)
 
   const debouncedValue = useDebounce(inputValue, 500)
+  useClickOutside(componentRef, () => {
+    setSuggestions([])
+  })
 
   // 搜索框 onChange 时发生
   useEffect(() => {
@@ -131,7 +136,7 @@ export const AutoComplete = ({
     )
   }
   return (
-    <div className="rose-auto-complete">
+    <div className="rose-auto-complete" ref={componentRef}>
       <Input
         value={inputValue}
         onChange={handleChange}
