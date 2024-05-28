@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState, KeyboardEvent } from 'react'
+import { ChangeEvent, useEffect, useState, KeyboardEvent, useRef } from 'react'
 import Input, { InputProps } from '../Input/input'
 import Icon from '../Icon/icon'
 import useDebounce from '../../hooks/useDebounce'
@@ -37,12 +37,13 @@ export const AutoComplete = ({
   const [suggestions, setSuggestions] = useState<DataSourceType[]>([])
   const [loading, setLoading] = useState(false)
   const [highlightIndex, setHighlightIndex] = useState(-1)
+  const triggerSearch = useRef(false)
 
   const debouncedValue = useDebounce(inputValue, 500)
 
   // 搜索框 onChange 时发生
   useEffect(() => {
-    if (debouncedValue) {
+    if (debouncedValue && triggerSearch.current) {
       const result = fetchSuggestions(debouncedValue)
       if (result instanceof Promise) {
         setLoading(true)
@@ -93,6 +94,7 @@ export const AutoComplete = ({
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.trim()
     setInputValue(value)
+    triggerSearch.current = true
   }
 
   const handleSelect = (item: DataSourceType) => {
@@ -101,6 +103,7 @@ export const AutoComplete = ({
     if (onSelect) {
       onSelect(item)
     }
+    triggerSearch.current = false
   }
 
   const renderTemplate = (item: DataSourceType) => {
