@@ -157,6 +157,7 @@ export const AutoComplete = ({
           })
           return (
             <Transition
+              key={index}
               in={showDropdown || loading}
               animation="zoom-in-top"
               timeout={300}

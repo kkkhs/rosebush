@@ -1,10 +1,9 @@
-import { FunctionComponentElement, useContext, useState } from 'react'
+import { useContext, useState } from 'react'
 import { MenuContext } from './menu'
 import classNames from 'classnames'
 import { MenuItemProps } from './menuItem'
 import React from 'react'
 import Icon from '../Icon/icon'
-import { CSSTransition } from 'react-transition-group'
 import Transition from '../Transition/transition'
 
 export interface subMenuProps {
