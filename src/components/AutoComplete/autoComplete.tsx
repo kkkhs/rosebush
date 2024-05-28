@@ -4,6 +4,7 @@ import Icon from '../Icon/icon'
 import useDebounce from '../../hooks/useDebounce'
 import classNames from 'classnames'
 import useClickOutside from '../../hooks/useClickOutside'
+import Transition from '../Transition/transition'
 
 // 来源数据的类型
 interface DataSourceObject {
@@ -19,17 +20,33 @@ export interface AutoCompleteProps
   fetchSuggestions: (
     str: string
   ) => DataSourceType[] | Promise<DataSourceType[]>
-  /** 点击选中建议项时触发的回调*/
+  /**
+   * 点击选中建议项时触发的回调
+   */
   onSelect?: (item: DataSourceType) => void
-  /** 文本框发生改变的时候触发的事件*/
+  /**
+   * 文本框发生改变的时候触发的事件
+   */
   onChange?: (value: string) => void
-  /**支持自定义渲染下拉项，返回 ReactElement */
+  /**
+   * 支持自定义渲染下拉项，返回 ReactElement
+   */
   renderOption?: (item: DataSourceType) => React.ReactElement
 }
 
+/**
+ * 输入框自动完成功能。当输入值需要自动完成时使用，支持同步和异步两种方式
+ * 支持 Input 组件的所有属性 支持键盘事件选择
+ * ### 引用方法
+ *
+ * ~~~js
+ * import { AutoComplete } from 'rosebush'
+ * ~~~
+ */
 export const AutoComplete = ({
   fetchSuggestions,
   onSelect,
+  onChange,
   value,
   renderOption,
   ...restProps
@@ -37,6 +54,7 @@ export const AutoComplete = ({
   const [inputValue, setInputValue] = useState(value as string)
   const [suggestions, setSuggestions] = useState<DataSourceType[]>([])
   const [loading, setLoading] = useState(false)
+  const [showDropdown, setShowDropdown] = useState(false)
   const [highlightIndex, setHighlightIndex] = useState(-1)
   const triggerSearch = useRef(false)
   const componentRef = useRef<HTMLDivElement>(null)
@@ -49,22 +67,33 @@ export const AutoComplete = ({
   // 搜索框 onChange 时发生
   useEffect(() => {
     if (debouncedValue && triggerSearch.current) {
-      const result = fetchSuggestions(debouncedValue)
-      if (result instanceof Promise) {
+      setSuggestions([])
+      const results = fetchSuggestions(debouncedValue)
+      if (results instanceof Promise) {
+        // 如果是Primise请求在 then 中处理
         setLoading(true)
-        result.then((data) => {
+        results.then((data) => {
           setLoading(false)
           setSuggestions(data)
+          if (data.length > 0) {
+            setShowDropdown(true)
+          }
         })
       } else {
-        setSuggestions(result)
+        // 普通请求直接处理
+        setSuggestions(results)
+        setShowDropdown(true)
+        if (results.length > 0) {
+          setShowDropdown(true)
+        }
       }
     } else {
-      setSuggestions([])
+      setShowDropdown(false)
     }
     setHighlightIndex(-1)
-  }, [debouncedValue])
+  }, [debouncedValue, fetchSuggestions])
 
+  // 键盘互动的下标变化处理
   const highlight = (index: number) => {
     if (index < 0) index = 0
     if (index >= suggestions.length) {
@@ -73,7 +102,7 @@ export const AutoComplete = ({
     setHighlightIndex(index)
   }
 
-  // 支持键盘
+  // 支持键盘互动功能
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     switch (e.keyCode) {
       case 13: // enter
@@ -99,6 +128,9 @@ export const AutoComplete = ({
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.trim()
     setInputValue(value)
+    if (onChange) {
+      onChange(value)
+    }
     triggerSearch.current = true
   }
 
@@ -111,6 +143,7 @@ export const AutoComplete = ({
     triggerSearch.current = false
   }
 
+  // 处理是否传入自定义模板样式
   const renderTemplate = (item: DataSourceType) => {
     return renderOption ? renderOption(item) : item.value
   }
@@ -123,13 +156,36 @@ export const AutoComplete = ({
             'item-highlighted': index === highlightIndex,
           })
           return (
-            <li
-              key={index}
-              className={cnames}
-              onClick={() => handleSelect(item)}
+            <Transition
+              in={showDropdown || loading}
+              animation="zoom-in-top"
+              timeout={300}
+              onExited={() => {
+                setSuggestions([])
+              }}
             >
-              {renderTemplate(item)}
-            </li>
+              <ul className="rose-suggestion-list">
+                {loading && (
+                  <div className="suggstions-loading-icon">
+                    <Icon icon="spinner" spin />
+                  </div>
+                )}
+                {suggestions.map((item, index) => {
+                  const cnames = classNames('suggestion-item', {
+                    'is-active': index === highlightIndex,
+                  })
+                  return (
+                    <li
+                      key={index}
+                      className={cnames}
+                      onClick={() => handleSelect(item)}
+                    >
+                      {renderTemplate(item)}
+                    </li>
+                  )
+                })}
+              </ul>
+            </Transition>
           )
         })}
       </ul>
@@ -143,13 +199,7 @@ export const AutoComplete = ({
         onKeyDown={handleKeyDown}
         {...restProps}
       />
-      {loading && (
-        <ul>
-          <Icon icon="spinner" spin />
-          ...loading
-        </ul>
-      )}
-      {suggestions.length > 0 && generateDropdown()}
+      {generateDropdown()}
     </div>
   )
 }

@@ -1,6 +1,7 @@
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
 import Icon from '../Icon/icon'
 import classNames from 'classnames'
+import React, { forwardRef } from 'react'
 
 type InputSize = 'lg' | 'sm'
 export interface InputProps
@@ -41,18 +42,11 @@ export interface InputProps
  *
  * ### 组件展示
  */
-export const Input = ({
-  disabled,
-  size,
-  icon,
-  prepend,
-  append,
-  style,
-  ...restProps
-}: InputProps) => {
+export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
+  const { disabled, size, icon, prepend, append, style, ...restProps } = props
   const classes = classNames('rose-input-wrapper', {
     [`input-size-${size}`]: size,
-    'is-diabled': disabled,
+    'is-disabled': disabled,
     'input-group': prepend || append,
     'input-group-append': !!append,
     'input-group-prepend': !!prepend,
@@ -74,13 +68,18 @@ export const Input = ({
       {prepend && <div className="rose-input-group-prepend">{prepend}</div>}
       {icon && (
         <div className="icon-wrapper">
-          <Icon icon={icon} />
+          <Icon icon={icon} title={`title-${icon}`} />
         </div>
       )}
-      <input className="rose-input-inner" disabled={disabled} {...restProps} />
+      <input
+        ref={ref}
+        className="rose-input-inner"
+        disabled={disabled}
+        {...restProps}
+      />
       {append && <div className="rose-input-group-append">{append}</div>}
     </div>
   )
-}
+})
 
 export default Input
