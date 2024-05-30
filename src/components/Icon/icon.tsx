@@ -33,7 +33,11 @@ export interface IconProps extends FontAwesomeIconProps {
  * import { Icon } from 'rosebush'
  * ~~~
  */
-const Icon: React.FC<IconProps> = ({ className, theme, ...restProps }) => {
+const Icon: React.FC<IconProps> = ({
+  className,
+  theme,
+  ...restProps
+}: IconProps) => {
   // icon-primary
   const classes = classNames('rose-icon', className, {
     [`icon-${theme}`]: theme, // 可变的key使用[]包裹

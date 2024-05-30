@@ -42,44 +42,46 @@ export interface InputProps
  *
  * ### 组件展示
  */
-export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
-  const { disabled, size, icon, prepend, append, style, ...restProps } = props
-  const classes = classNames('rose-input-wrapper', {
-    [`input-size-${size}`]: size,
-    'is-disabled': disabled,
-    'input-group': prepend || append,
-    'input-group-append': !!append,
-    'input-group-prepend': !!prepend,
-  })
+export const Input = forwardRef<HTMLInputElement, InputProps>(
+  (props: InputProps, ref) => {
+    const { disabled, size, icon, prepend, append, style, ...restProps } = props
+    const classes = classNames('rose-input-wrapper', {
+      [`input-size-${size}`]: size,
+      'is-disabled': disabled,
+      'input-group': prepend || append,
+      'input-group-append': !!append,
+      'input-group-prepend': !!prepend,
+    })
 
-  const fixControlledValue = (value: any) => {
-    if (typeof value === 'undefined' || value === null) {
-      return ''
+    const fixControlledValue = (value: any) => {
+      if (typeof value === 'undefined' || value === null) {
+        return ''
+      }
+      return value
     }
-    return value
-  }
-  if ('value' in restProps) {
-    delete restProps.defaultValue // 防止同时是受控组件和非受控组件
-    restProps.value = fixControlledValue(restProps.value) // 防止value为undefined或null
-  }
+    if ('value' in restProps) {
+      delete restProps.defaultValue // 防止同时是受控组件和非受控组件
+      restProps.value = fixControlledValue(restProps.value) // 防止value为undefined或null
+    }
 
-  return (
-    <div className={classes} style={style}>
-      {prepend && <div className="rose-input-group-prepend">{prepend}</div>}
-      {icon && (
-        <div className="icon-wrapper">
-          <Icon icon={icon} title={`title-${icon}`} />
-        </div>
-      )}
-      <input
-        ref={ref}
-        className="rose-input-inner"
-        disabled={disabled}
-        {...restProps}
-      />
-      {append && <div className="rose-input-group-append">{append}</div>}
-    </div>
-  )
-})
+    return (
+      <div className={classes} style={style}>
+        {prepend && <div className="rose-input-group-prepend">{prepend}</div>}
+        {icon && (
+          <div className="icon-wrapper">
+            <Icon icon={icon} title={`title-${icon}`} />
+          </div>
+        )}
+        <input
+          ref={ref}
+          className="rose-input-inner"
+          disabled={disabled}
+          {...restProps}
+        />
+        {append && <div className="rose-input-group-append">{append}</div>}
+      </div>
+    )
+  }
+)
 
 export default Input
