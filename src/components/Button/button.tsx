@@ -20,7 +20,7 @@ interface BaseButtonProps {
    * 设置 Button 的类型
    */
   btnType?: ButtonType
-  children: React.ReactNode
+  children?: React.ReactNode
   /**
    * 设置 Link Button 的跳转链接
    */
@@ -56,7 +56,7 @@ const Button = ({
   children,
   href,
   ...restProps
-}: BaseButtonProps) => {
+}: ButtonProps) => {
   // btn, btn-lg, btn-primary
   const classes = classNames('btn', className, {
     [`btn-${btnType}`]: btnType,
