@@ -26,17 +26,18 @@ type Story = StoryObj<typeof meta>
 export const ABasicForm: Story = () => {
   return (
     <Form>
-      <Item label="用户名">
+      <Item name="username" label="用户名">
         <Input />
       </Item>
-      <Item label="密码">
+      <Item name="password" label="密码">
         <Input type="password" />
       </Item>
-      <Item>
-        <Input placeholder="no-label" />
-      </Item>
       <div className="agreement-section" style={{ display: 'flex' }}>
-        <Item>
+        <Item
+          name="agreement"
+          valuePropName="checked"
+          getValueFromEvent={(e) => e.target.checked}
+        >
           <input type="checkbox" />
         </Item>
         <span className="agree-text">

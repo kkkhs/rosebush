@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { Dispatch, FC, createContext } from 'react'
 import useStore from './useStore'
 
 export interface FormProps {
@@ -6,16 +6,33 @@ export interface FormProps {
   children?: React.ReactNode
 }
 
+// 拿到函数返回值的类型 ReturnType
+export type IFormContext = Pick<
+  ReturnType<typeof useStore>,
+  'dispatch' | 'fields'
+>
+
+// 创建 Context
+export const FormContext = createContext<IFormContext>({} as IFormContext)
+
 export const Form: FC<FormProps> = ({
   name = 'rose_form',
   children,
 }: FormProps) => {
-  const { form, fields } = useStore()
+  const { form, fields, dispatch } = useStore()
+
+  // Context传递的数据
+  const passedContext: IFormContext = {
+    dispatch,
+    fields,
+  }
 
   return (
     <>
       <form name={name} className="rose-form">
-        {children}
+        <FormContext.Provider value={passedContext}>
+          {children}
+        </FormContext.Provider>
       </form>
 
       {/* 调试 */}

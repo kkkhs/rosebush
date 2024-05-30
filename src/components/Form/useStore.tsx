@@ -21,7 +21,7 @@ export interface FormState {
 
 // Fields 操作接口
 export interface FieldsAction {
-  type: 'addField'
+  type: 'addField' | 'updateValue'
   name: string
   value: any
 }
@@ -33,7 +33,11 @@ function fieldsReducer(state: FieldsState, action: FieldsAction): FieldsState {
         ...state,
         [action.name]: { ...action.value },
       }
-
+    case 'updateValue':
+      return {
+        ...state,
+        [action.name]: { ...state[action.name], value: action.value },
+      }
     default:
       return state
   }
