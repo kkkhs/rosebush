@@ -1,11 +1,17 @@
 import { useReducer, useState } from 'react'
 import Schema, { RuleItem, ValidateError } from 'async-validator'
 
+export type CustomRuleFunc = ({
+  getFieldValue,
+}: {
+  getFieldValue: (key: string) => string
+}) => RuleItem
+export type CustomRule = RuleItem | CustomRuleFunc
 // 每个 field 的接口
 export interface FieldDetail {
   name: string
   value: string
-  rules: RuleItem[]
+  rules: CustomRule[]
   isValid: boolean
   errors: ValidateError[]
 }
@@ -54,11 +60,28 @@ function useStore() {
   // form state
   const [form, setForm] = useState<FormState>({ isValid: true })
   const [fields, dispatch] = useReducer(fieldsReducer, {})
+  const getFieldValue = (key: string) => {
+    return fields[key] && fields[key].value
+  }
+
+  // 转换规则类型
+  const transfromRules = (rules: CustomRule[]) => {
+    return rules.map((rule) => {
+      if (typeof rule === 'function') {
+        // 如果是 CustomRuleFunc 则返回执行后的值
+        const calledRule = rule({ getFieldValue })
+        return calledRule
+      } else {
+        // 如果是ruleItem直接返回
+        return rule
+      }
+    })
+  }
   // 验证单个字段
   const validateField = async (name: string) => {
     const { value, rules } = fields[name]
     const descriptor = {
-      [name]: rules,
+      [name]: transfromRules(rules),
     }
     const valueMap = {
       [name]: value,

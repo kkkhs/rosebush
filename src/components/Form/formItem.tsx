@@ -8,6 +8,7 @@ import React, {
 } from 'react'
 import { FormContext } from './form'
 import { RuleItem } from 'async-validator/dist-types/interface'
+import { CustomRule } from './useStore'
 
 export type SomeRequired<T, K extends keyof T> = Required<Pick<T, K>> &
   Omit<T, K>
@@ -19,7 +20,7 @@ export interface FormItemProps {
   valuePropName?: string
   trigger?: string // 何时更新
   getValueFromEvent?: (event: any) => any
-  rules?: RuleItem[]
+  rules?: CustomRule[]
   validateTrigger?: string
 }
 
@@ -55,7 +56,9 @@ const FormItem = ({
   const value = fieldState?.value
   // 获取错误信息
   const errors = fieldState?.errors
-  const isRequired = rules?.some((rule) => rule.required)
+  const isRequired = rules?.some(
+    (rule) => typeof rule !== 'function' && rule.required
+  )
   const hasError = errors && errors.length > 0
   const labelClass = classNames({
     'rose-form-item-required': isRequired,
