@@ -7,6 +7,7 @@ import React, {
   useEffect,
 } from 'react'
 import { FormContext } from './form'
+import { RuleItem } from 'async-validator/dist-types/interface'
 
 export type SomeRequired<T, K extends keyof T> = Required<Pick<T, K>> &
   Omit<T, K>
@@ -18,6 +19,8 @@ export interface FormItemProps {
   valuePropName?: string
   trigger?: string // 何时更新
   getValueFromEvent?: (event: any) => any
+  rules?: RuleItem[]
+  validateTrigger?: string
 }
 
 const FormItem = ({
@@ -27,9 +30,12 @@ const FormItem = ({
   valuePropName = 'value',
   trigger = 'onChange',
   getValueFromEvent = (e) => e.target.value,
+  rules,
+  validateTrigger = 'onBlur',
 }: FormItemProps) => {
   // 子组件拿到context的值
-  const { dispatch, fields, initialValues } = useContext(FormContext)
+  const { dispatch, fields, initialValues, validateField } =
+    useContext(FormContext)
   const rowClass = classNames('rose-row', {
     'rose-row-no-label': !label,
   })
@@ -37,7 +43,11 @@ const FormItem = ({
   useEffect(() => {
     // FormStore初始化
     const value = (initialValues && initialValues[name]) || ''
-    dispatch({ type: 'addField', name, value: { label, name, value } })
+    dispatch({
+      type: 'addField',
+      name,
+      value: { label, name, value, rules, isValid: true },
+    })
   }, [])
 
   // 获取store中对应的value
@@ -50,11 +60,17 @@ const FormItem = ({
     dispatch({ type: 'updateValue', name, value })
   }
 
+  const onValueValidate = async () => {
+    await validateField(name)
+  }
   // 实现store中数据的自动更新
   // 1、手动地创建一个属性列表，需要有 value 以及 onChange 属性
   const controlProps: Record<string, any> = {}
   controlProps[valuePropName] = value
   controlProps[trigger] = onValueUpdate
+  if (rules) {
+    controlProps[validateTrigger] = onValueValidate
+  }
   // 2、获取 children 数组的第一个元素
   const childrenList = React.Children.toArray(children)
   if (childrenList.length === 0) {

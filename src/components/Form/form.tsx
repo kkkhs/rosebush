@@ -10,7 +10,7 @@ export interface FormProps {
 // 拿到函数返回值的类型 ReturnType
 export type IFormContext = Pick<
   ReturnType<typeof useStore>,
-  'dispatch' | 'fields'
+  'dispatch' | 'fields' | 'validateField'
 > &
   Pick<FormProps, 'initialValues'>
 
@@ -22,13 +22,14 @@ export const Form: FC<FormProps> = ({
   children,
   initialValues,
 }: FormProps) => {
-  const { form, fields, dispatch } = useStore()
+  const { form, fields, dispatch, validateField } = useStore()
 
   // Context传递的数据
   const passedContext: IFormContext = {
     dispatch,
     fields,
     initialValues,
+    validateField,
   }
 
   return (

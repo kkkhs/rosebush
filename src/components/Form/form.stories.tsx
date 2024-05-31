@@ -26,10 +26,18 @@ type Story = StoryObj<typeof meta>
 export const ABasicForm: Story = () => {
   return (
     <Form initialValues={{ username: 'rose', agreement: true }}>
-      <Item name="username" label="用户名">
+      <Item
+        name="username"
+        label="用户名"
+        rules={[{ type: 'string', required: true, min: 3 }]}
+      >
         <Input />
       </Item>
-      <Item name="password" label="密码">
+      <Item
+        name="password"
+        label="密码"
+        rules={[{ type: 'string', required: true, min: 3, max: 8 }]}
+      >
         <Input type="password" />
       </Item>
       <div className="agreement-section" style={{ display: 'flex' }}>
