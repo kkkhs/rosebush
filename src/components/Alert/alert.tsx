@@ -7,7 +7,7 @@
  */
 
 import classNames from 'classnames'
-import { FC, useState } from 'react'
+import React, { FC, useState } from 'react'
 import Icon from '../Icon/icon'
 import Transition from '../Transition/transition'
 

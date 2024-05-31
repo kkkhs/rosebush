@@ -1,4 +1,10 @@
-import { ChangeEvent, useEffect, useState, KeyboardEvent, useRef } from 'react'
+import React, {
+  ChangeEvent,
+  useEffect,
+  useState,
+  KeyboardEvent,
+  useRef,
+} from 'react'
 import Input, { InputProps } from '../Input/input'
 import Icon from '../Icon/icon'
 import useDebounce from '../../hooks/useDebounce'
