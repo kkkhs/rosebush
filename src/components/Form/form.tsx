@@ -32,7 +32,7 @@ export const Form: FC<FormProps> = ({
   onFinishFailed,
 }: FormProps) => {
   const { form, fields, dispatch, validateField, validateAllFields } =
-    useStore()
+    useStore(initialValues)
 
   // Context传递的数据
   const passedContext: IFormContext = {

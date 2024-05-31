@@ -64,7 +64,7 @@ function fieldsReducer(state: FieldsState, action: FieldsAction): FieldsState {
   }
 }
 
-function useStore() {
+function useStore(initialValues?: Record<string, any>) {
   // form state
   const [form, setForm] = useState<FormState>({
     isValid: true,
@@ -72,8 +72,31 @@ function useStore() {
     errors: {},
   })
   const [fields, dispatch] = useReducer(fieldsReducer, {})
+
+  // 获取 key 对应的value值
   const getFieldValue = (key: string) => {
     return fields[key] && fields[key].value
+  }
+
+  // 获取全部字段的 value 值
+  const getFieldsValue = () => {
+    return mapValues(fields, (item) => item.value)
+  }
+
+  const setFieldValue = (name: string, value: any) => {
+    if (fields[name]) {
+      dispatch({ type: 'updateValue', name, value })
+    }
+  }
+
+  const resetFields = () => {
+    if (initialValues) {
+      each(initialValues, (value, name) => {
+        if (fields[name]) {
+          dispatch({ type: 'updateValue', name, value })
+        }
+      })
+    }
   }
 
   // 转换规则类型
@@ -170,6 +193,9 @@ function useStore() {
     form,
     validateField,
     validateAllFields,
+    getFieldsValue,
+    setFieldValue,
+    resetFields,
   }
 }
 
