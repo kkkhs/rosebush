@@ -53,6 +53,16 @@ const FormItem = ({
   // 获取store中对应的value
   const fieldState = fields[name]
   const value = fieldState?.value
+  // 获取错误信息
+  const errors = fieldState?.errors
+  const isRequired = rules?.some((rule) => rule.required)
+  const hasError = errors && errors.length > 0
+  const labelClass = classNames({
+    'rose-form-item-required': isRequired,
+  })
+  const itemClass = classNames('rose-form-item-control', {
+    'rose-form-item-has-error': hasError,
+  })
 
   const onValueUpdate = (e: any) => {
     const value = getValueFromEvent(e)
@@ -93,11 +103,20 @@ const FormItem = ({
   return (
     <div className={rowClass}>
       {label && (
-        <div>
-          <label title={label}>{label}</label>
+        <div className="rose-form-item-label">
+          <label title={label} className={labelClass}>
+            {label}
+          </label>
         </div>
       )}
-      <div className="rose-form-item">{returnChildNode}</div>
+      <div className="rose-form-item">
+        <div className={itemClass}>{returnChildNode}</div>
+        {hasError && (
+          <div className="rose-form-item-explain">
+            <span>{errors[0].message}</span>
+          </div>
+        )}
+      </div>
     </div>
   )
 }

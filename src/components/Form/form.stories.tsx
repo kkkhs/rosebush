@@ -8,6 +8,13 @@ const meta: Meta<typeof Form> = {
   title: 'Components/Form',
   id: 'Form',
   component: Form,
+  decorators: [
+    (Story) => (
+      <div style={{ width: '550px' }}>
+        <Story />
+      </div>
+    ),
+  ],
   parameters: {
     layout: 'centered',
     source: {

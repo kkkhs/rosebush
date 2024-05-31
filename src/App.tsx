@@ -10,6 +10,9 @@ import { faCoffee } from '@fortawesome/free-solid-svg-icons'
 import Icon from './components/Icon/icon'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
+import Form from './components/Form/form'
+import FormItem from './components/Form/formItem'
+import Input from './components/Input/input'
 
 library.add(fas)
 
@@ -97,6 +100,46 @@ function App() {
         </div>
         <h3>Icon</h3>
         <Icon icon="coffee" theme="danger" size="xl"></Icon>
+
+        <div style={{ width: ' 550px' }}>
+          <Form>
+            <FormItem
+              name="username"
+              label="用户名"
+              rules={[{ type: 'string', required: true, min: 3 }]}
+            >
+              <Input />
+            </FormItem>
+            <FormItem
+              name="password"
+              label="密码"
+              rules={[{ type: 'string', required: true, min: 3, max: 8 }]}
+            >
+              <Input type="password" />
+            </FormItem>
+            <div
+              className="agreement-section"
+              style={{ display: 'flex', justifyContent: 'center' }}
+            >
+              <FormItem
+                name="agreement"
+                valuePropName="checked"
+                getValueFromEvent={(e) => e.target.checked}
+              >
+                <input type="checkbox" />
+              </FormItem>
+              <span className="agree-text">
+                注册即代表你同意
+                <a href="#">用户协议</a>
+              </span>
+            </div>
+            <div className="rose-form-submit-area">
+              <Button type="submit" btnType="primary">
+                登陆
+              </Button>
+            </div>
+          </Form>
+        </div>
       </header>
     </div>
   )
