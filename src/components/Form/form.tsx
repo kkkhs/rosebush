@@ -3,6 +3,7 @@ import useStore from './useStore'
 
 export interface FormProps {
   name?: string
+  initialValues?: Record<string, any>
   children?: React.ReactNode
 }
 
@@ -10,7 +11,8 @@ export interface FormProps {
 export type IFormContext = Pick<
   ReturnType<typeof useStore>,
   'dispatch' | 'fields'
->
+> &
+  Pick<FormProps, 'initialValues'>
 
 // 创建 Context
 export const FormContext = createContext<IFormContext>({} as IFormContext)
@@ -18,6 +20,7 @@ export const FormContext = createContext<IFormContext>({} as IFormContext)
 export const Form: FC<FormProps> = ({
   name = 'rose_form',
   children,
+  initialValues,
 }: FormProps) => {
   const { form, fields, dispatch } = useStore()
 
@@ -25,6 +28,7 @@ export const Form: FC<FormProps> = ({
   const passedContext: IFormContext = {
     dispatch,
     fields,
+    initialValues,
   }
 
   return (

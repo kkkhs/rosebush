@@ -25,7 +25,7 @@ type Story = StoryObj<typeof meta>
 
 export const ABasicForm: Story = () => {
   return (
-    <Form>
+    <Form initialValues={{ username: 'rose', agreement: true }}>
       <Item name="username" label="用户名">
         <Input />
       </Item>

@@ -8,6 +8,9 @@ import React, {
 } from 'react'
 import { FormContext } from './form'
 
+export type SomeRequired<T, K extends keyof T> = Required<Pick<T, K>> &
+  Omit<T, K>
+
 export interface FormItemProps {
   name: string
   label?: string
@@ -26,14 +29,15 @@ const FormItem = ({
   getValueFromEvent = (e) => e.target.value,
 }: FormItemProps) => {
   // 子组件拿到context的值
-  const { dispatch, fields } = useContext(FormContext)
+  const { dispatch, fields, initialValues } = useContext(FormContext)
   const rowClass = classNames('rose-row', {
     'rose-row-no-label': !label,
   })
 
   useEffect(() => {
     // FormStore初始化
-    dispatch({ type: 'addField', name, value: { label, name, value: '' } })
+    const value = (initialValues && initialValues[name]) || ''
+    dispatch({ type: 'addField', name, value: { label, name, value } })
   }, [])
 
   // 获取store中对应的value
