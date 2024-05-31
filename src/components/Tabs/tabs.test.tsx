@@ -1,3 +1,4 @@
+import React from 'react'
 import { render, fireEvent, RenderResult } from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect'
 
@@ -8,7 +9,6 @@ const testProps: TabsProps = {
   defaultIndex: 1,
   onSelect: jest.fn(),
 }
-
 let wrapper: RenderResult
 describe('test Tabs Component', () => {
   beforeEach(() => {

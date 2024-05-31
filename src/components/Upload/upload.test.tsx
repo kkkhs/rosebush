@@ -15,7 +15,7 @@ jest.mock('../Icon/icon', () => {
     return <span onClick={props.onClick}>{props.icon}</span>
   }
 })
-jest.mock('axios') // 使用 jest 接管Aoxis
+jest.mock('axios')
 const mockedAxios = axios as jest.Mocked<typeof axios>
 
 const testProps: UploadProps = {
@@ -25,10 +25,8 @@ const testProps: UploadProps = {
   onRemove: jest.fn(),
   drag: true,
 }
-
 let wrapper: RenderResult, fileInput: HTMLInputElement, uploadArea: HTMLElement
 const testFile = new File(['xyz'], 'test.png', { type: 'image/png' })
-
 describe('test upload component', () => {
   beforeEach(() => {
     wrapper = render(<Upload {...testProps}>Click to upload</Upload>)
@@ -42,7 +40,7 @@ describe('test upload component', () => {
     // mockedAxios.post.mockImplementation(() => {
     //   return Promise.resolve({'data': 'cool'})
     // })
-    mockedAxios.post.mockResolvedValue({ data: 'cool' }) // 发送 post 请求
+    mockedAxios.post.mockResolvedValue({ data: 'cool' })
     expect(uploadArea).toBeInTheDocument()
     expect(fileInput).not.toBeVisible()
     fireEvent.change(fileInput, { target: { files: [testFile] } })
@@ -69,7 +67,7 @@ describe('test upload component', () => {
       })
     )
 
-    // remove the uploaded file
+    //remove the uploaded file
     expect(queryByText('times')).toBeInTheDocument()
     fireEvent.click(getByText('times'))
     expect(queryByText('test.png')).not.toBeInTheDocument()
@@ -81,8 +79,6 @@ describe('test upload component', () => {
       })
     )
   })
-
-  // 拖动功能测试
   it('drag and drop files should works fine', async () => {
     mockedAxios.post.mockResolvedValue({ data: 'cool' })
     fireEvent.dragOver(uploadArea)

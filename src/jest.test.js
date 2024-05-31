@@ -4,13 +4,13 @@ test('test common matcher', () => {
 })
 
 test('test to be true or false', () => {
-  expect(1).toBeTruthy
-  expect(0).toBeFalsy
+  expect(1).toBeTruthy()
+  expect(0).toBeFalsy()
 })
 
 test('test number', () => {
   expect(4).toBeGreaterThan(3)
-  expect(4).toBeLessThan(5)
+  expect(2).toBeLessThan(3)
 })
 
 test('test object', () => {
