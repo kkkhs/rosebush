@@ -15,19 +15,33 @@ import Transition from '../Transition/transition'
 import { SelectOptionProps } from './option'
 
 export interface SelectProps {
-  /**指定默认选中的条目	 可以是是字符串或者字符串数组*/
+  /**
+   * 指定默认选中的条目	 可以是是字符串或者字符串数组
+   * */
   defaultValue?: string | string[]
-  /** 选择框默认文字*/
+  /**
+   * 选择框默认文字
+   * */
   placeholder?: string
-  /** 是否禁用*/
+  /**
+   * 是否禁用
+   * */
   disabled?: boolean
-  /** 是否支持多选*/
+  /**
+   * 是否支持多选
+   * */
   multiple?: boolean
-  /** select input 的 name 属性	 */
+  /**
+   *  select input 的 name 属性
+   *  */
   name?: string
-  /**选中值发生变化时触发 */
+  /**
+   * 选中值发生变化时触发
+   * */
   onChange?: (selectedValue: string, selectedValues: string[]) => void
-  /**下拉框出现/隐藏时触发 */
+  /**
+   * 下拉框出现/隐藏时触发
+   * */
   onVisibleChange?: (visible: boolean) => void
   children?: ReactNode
 }
@@ -47,7 +61,7 @@ export const SelectContext = createContext<ISelectContext>({
  * ### 引用方法
  *
  * ~~~js
- * import { Select } from 'roseship'
+ * import { Select } from 'roseship-react'
  * // 然后可以使用 <Select> 和 <Select.Option>
  * ~~~
  */

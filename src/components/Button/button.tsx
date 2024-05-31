@@ -43,7 +43,7 @@ export type ButtonProps = Partial<NativeButtonProps & AnchorButtonProps>
  * ### 引用方法
  *
  * ```javascript
- * import { Button } from 'rosebush'
+ * import { Button } from 'rosebush-react'
  * ```
  *
  * ### 组件展示

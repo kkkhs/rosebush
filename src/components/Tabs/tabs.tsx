@@ -30,7 +30,7 @@ export interface TabsProps {
  * ### 引用方法
  *
  * ~~~js
- * import { Tabs } from 'rosebush'
+ * import { Tabs } from 'rosebush-react'
  * ~~~
  */
 const Tabs: React.FC<TabsProps> = ({

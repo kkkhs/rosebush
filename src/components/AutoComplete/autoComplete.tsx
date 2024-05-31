@@ -46,7 +46,7 @@ export interface AutoCompleteProps
  * ### 引用方法
  *
  * ~~~js
- * import { AutoComplete } from 'rosebush'
+ * import { AutoComplete } from 'rosebush-react'
  * ~~~
  */
 export const AutoComplete = ({

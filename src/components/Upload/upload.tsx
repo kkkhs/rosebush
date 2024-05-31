@@ -86,7 +86,7 @@ export interface UploadProps {
  * ### 引用方法
  *
  * ~~~js
- * import { Upload } from 'rosebush'
+ * import { Upload } from 'rosebush-react'
  * ~~~
  */
 export const Upload = ({
