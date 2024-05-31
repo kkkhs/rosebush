@@ -6,14 +6,14 @@ import React from 'react'
 import Icon from '../Icon/icon'
 import Transition from '../Transition/transition'
 
-export interface subMenuProps {
+export interface SubMenuProps {
   index?: string
   title?: string
   className?: string
   children?: React.ReactNode
 }
 
-const SubMenu: React.FC<subMenuProps> = ({
+const SubMenu: React.FC<SubMenuProps> = ({
   index,
   title,
   children,
