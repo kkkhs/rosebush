@@ -33,7 +33,7 @@ type Story = StoryObj<typeof meta>
 
 export const ABasicForm: Story = () => {
   return (
-    <Form initialValues={{ username: 'rose', agreement: true }}>
+    <Form initialValues={{ username: 'rose', agreement: false }}>
       <Item
         name="username"
         label="用户名"
@@ -51,10 +51,14 @@ export const ABasicForm: Story = () => {
       <Item label="重复密码" name="confirmPwd" rules={confirmRules}>
         <Input type="password" />
       </Item>
-      <div className="agreement-section" style={{ display: 'flex' }}>
+      <div
+        className="agreement-section"
+        style={{ display: 'flex', justifyContent: 'center' }}
+      >
         <Item
           name="agreement"
           valuePropName="checked"
+          rules={[{ type: 'enum', enum: [true], message: '请同意协议' }]}
           getValueFromEvent={(e) => e.target.checked}
         >
           <input type="checkbox" />

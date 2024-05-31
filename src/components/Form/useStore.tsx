@@ -1,5 +1,6 @@
 import { useReducer, useState } from 'react'
 import Schema, { RuleItem, ValidateError } from 'async-validator'
+import { mapValues, each } from 'lodash-es'
 
 export type CustomRuleFunc = ({
   getFieldValue,
@@ -21,9 +22,16 @@ export interface FieldsState {
   [key: string]: FieldDetail
 }
 
+export interface ValidateErrorType extends Error {
+  errors: ValidateError[]
+  fields: Record<string, ValidateError[]>
+}
+
 // form 的状态
 export interface FormState {
   isValid: boolean
+  isSubmitting: boolean
+  errors: Record<string, ValidateError[]>
 }
 
 // Fields 操作接口
@@ -58,7 +66,11 @@ function fieldsReducer(state: FieldsState, action: FieldsAction): FieldsState {
 
 function useStore() {
   // form state
-  const [form, setForm] = useState<FormState>({ isValid: true })
+  const [form, setForm] = useState<FormState>({
+    isValid: true,
+    isSubmitting: false,
+    errors: {},
+  })
   const [fields, dispatch] = useReducer(fieldsReducer, {})
   const getFieldValue = (key: string) => {
     return fields[key] && fields[key].value
@@ -109,11 +121,55 @@ function useStore() {
       })
     }
   }
+
+  // 表单的整体验证逻辑
+  const validateAllFields = async function () {
+    let isValid = true
+    let errors: Record<string, ValidateError[]> = {}
+    // valueMap 结构: {'username': 'abc}
+    const valueMap = mapValues(fields, (item) => item.value)
+    const descriptor = mapValues(fields, (item) => transfromRules(item.rules))
+    const validator = new Schema(descriptor)
+    setForm({ ...form, isSubmitting: true })
+    try {
+      await validator.validate(valueMap)
+    } catch (e) {
+      isValid = false
+      const err = e as ValidateErrorType
+      errors = err.fields
+      each(fields, (value, name) => {
+        // 判断 errors 中是否有对应的 key
+        if (errors[name]) {
+          const itemErrors = errors[name]
+          dispatch({
+            type: 'updateValidateResult',
+            name,
+            value: { isValid: false, errors: itemErrors },
+          })
+        } else if (value.rules.length > 0 && !errors[name]) {
+          // 有对应的 rules 并且没有 errors
+          dispatch({
+            type: 'updateValidateResult',
+            name,
+            value: { isValid: true, errors: [] },
+          })
+        }
+      })
+    } finally {
+      setForm({ ...form, isSubmitting: false, isValid, errors })
+      return {
+        isValid,
+        errors,
+        values: valueMap,
+      }
+    }
+  }
   return {
     fields,
     dispatch,
     form,
     validateField,
+    validateAllFields,
   }
 }
 
