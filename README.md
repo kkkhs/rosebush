@@ -1,8 +1,8 @@
 # rosebush
 
 rosebush 是使用 React Hooks 和 typescript 打造的组件库
-它的官方地址是
-[rosebush.vercel.app](https://rosebush.vercel.app/)
+
+[rosebush 的官方地址](https://rosebush.vercel.app/)
 
 ### 安装试试
 
@@ -43,5 +43,5 @@ npm test
 npm run build
 
 //发布到 npm
-npm run publish
+npm publish
 ```
