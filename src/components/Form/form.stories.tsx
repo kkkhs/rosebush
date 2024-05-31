@@ -34,45 +34,50 @@ type Story = StoryObj<typeof meta>
 export const ABasicForm: Story = () => {
   return (
     <Form initialValues={{ username: 'rose', agreement: false }}>
-      <Item
-        name="username"
-        label="用户名"
-        rules={[{ type: 'string', required: true, min: 3 }]}
-      >
-        <Input />
-      </Item>
-      <Item
-        name="password"
-        label="密码"
-        rules={[{ type: 'string', required: true, min: 3, max: 8 }]}
-      >
-        <Input type="password" />
-      </Item>
-      <Item label="重复密码" name="confirmPwd" rules={confirmRules}>
-        <Input type="password" />
-      </Item>
-      <div
-        className="agreement-section"
-        style={{ display: 'flex', justifyContent: 'center' }}
-      >
-        <Item
-          name="agreement"
-          valuePropName="checked"
-          rules={[{ type: 'enum', enum: [true], message: '请同意协议' }]}
-          getValueFromEvent={(e) => e.target.checked}
-        >
-          <input type="checkbox" />
-        </Item>
-        <span className="agree-text">
-          注册即代表你同意
-          <a href="#">用户协议</a>
-        </span>
-      </div>
-      <div className="rose-form-submit-area">
-        <Button type="submit" btnType="primary">
-          登陆
-        </Button>
-      </div>
+      {({ isValid, isSubmitting }) => (
+        <>
+          <Item
+            name="username"
+            label="用户名"
+            rules={[{ type: 'string', required: true, min: 3 }]}
+          >
+            <Input />
+          </Item>
+          <Item
+            name="password"
+            label="密码"
+            rules={[{ type: 'string', required: true, min: 3, max: 8 }]}
+          >
+            <Input type="password" />
+          </Item>
+          <Item label="重复密码" name="confirmPwd" rules={confirmRules}>
+            <Input type="password" />
+          </Item>
+          <div
+            className="agreement-section"
+            style={{ display: 'flex', justifyContent: 'center' }}
+          >
+            <Item
+              name="agreement"
+              valuePropName="checked"
+              rules={[{ type: 'enum', enum: [true], message: '请同意协议' }]}
+              getValueFromEvent={(e) => e.target.checked}
+            >
+              <input type="checkbox" />
+            </Item>
+            <span className="agree-text">
+              注册即代表你同意
+              <a href="#">用户协议</a>
+            </span>
+          </div>
+          <div className="rose-form-submit-area">
+            <Button type="submit" btnType="primary">
+              登陆 {isSubmitting ? '验证中' : '验证完毕'}
+              {isValid ? ' 通过😄' : ' 没通过😢'}
+            </Button>
+          </div>
+        </>
+      )}
     </Form>
   )
 }
@@ -95,6 +100,7 @@ const confirmRules: CustomRule[] = [
     },
   }),
 ]
+
 // export const CFullForm = (args) => {
 //   const ref = useRef<IFormRef>()
 //   const resetAll = () => {

@@ -1,12 +1,12 @@
-import { Dispatch, FC, createContext } from 'react'
+import { FC, ReactNode, createContext } from 'react'
 import { ValidateError } from 'async-validator'
+import useStore, { FormState } from './useStore'
 
-import useStore from './useStore'
-
+export type RenderProps = (form: FormState) => ReactNode
 export interface FormProps {
   name?: string
   initialValues?: Record<string, any>
-  children?: React.ReactNode
+  children?: React.ReactNode | RenderProps
   onFinish?: (values: Record<string, any>) => void
   onFinishFailed?: (
     values: Record<string, any>,
@@ -54,11 +54,19 @@ export const Form: FC<FormProps> = ({
     }
   }
 
+  // 判断 children是 renderProps 还是普通的 ReactNode
+  let childrenNode: ReactNode
+  if (typeof children === 'function') {
+    childrenNode = children(form)
+  } else {
+    childrenNode = children
+  }
+
   return (
     <>
       <form name={name} className="rose-form" onSubmit={submitFrom}>
         <FormContext.Provider value={passedContext}>
-          {children}
+          {childrenNode}
         </FormContext.Provider>
       </form>
 
