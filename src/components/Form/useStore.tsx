@@ -193,6 +193,7 @@ function useStore(initialValues?: Record<string, any>) {
     form,
     validateField,
     validateAllFields,
+    getFieldValue,
     getFieldsValue,
     setFieldValue,
     resetFields,
