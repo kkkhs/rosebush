@@ -26,7 +26,7 @@ import classNames from 'classnames';
  * ### 引用方法
  *
  * ```javascript
- * import { Button } from 'rosebush'
+ * import { Button } from 'rosebush-react'
  * ```
  *
  * ### 组件展示

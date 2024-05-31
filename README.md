@@ -2,7 +2,7 @@
 
 rosebush 是使用 React Hooks 和 typescript 打造的组件库
 它的官方地址是
-[vikingship.xyz](http://vikingship.xyz)
+[rosebush.vercel.app](https://rosebush.vercel.app/)
 
 ### 安装试试
 

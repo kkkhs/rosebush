@@ -33,7 +33,7 @@ import Transition from '../Transition/transition';
  * ### 引用方法
  *
  * ~~~js
- * import { AutoComplete } from 'rosebush'
+ * import { AutoComplete } from 'rosebush-react'
  * ~~~
  */
 export var AutoComplete = function (_a) {

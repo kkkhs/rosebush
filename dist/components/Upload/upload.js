@@ -27,7 +27,7 @@ import Dragger from './dragger';
  * ### 引用方法
  *
  * ~~~js
- * import { Upload } from 'rosebush'
+ * import { Upload } from 'rosebush-react'
  * ~~~
  */
 export var Upload = function (_a) {

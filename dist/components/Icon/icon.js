@@ -31,7 +31,7 @@ import { FontAwesomeIcon, } from '@fortawesome/react-fontawesome';
  * ### 引用方法
  *
  * ~~~js
- * import { Icon } from 'rosebush'
+ * import { Icon } from 'rosebush-react'
  * ~~~
  */
 var Icon = function (_a) {

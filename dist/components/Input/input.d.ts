@@ -29,7 +29,7 @@ export interface InputProps extends Omit<React.InputHTMLAttributes<HTMLElement>,
  *
  * ### 引用方式
  * ~~~js
- * import { Input } from 'rosebush'
+ * import { Input } from 'rosebush-react'
  * ~~~
  *
  * 支持 HTMLInput 的所有基本属性

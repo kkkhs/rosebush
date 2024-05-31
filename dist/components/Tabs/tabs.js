@@ -6,7 +6,7 @@ import React, { useState } from 'react';
  * ### 引用方法
  *
  * ~~~js
- * import { Tabs } from 'rosebush'
+ * import { Tabs } from 'rosebush-react'
  * ~~~
  */
 var Tabs = function (_a) {

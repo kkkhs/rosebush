@@ -34,7 +34,7 @@ export interface AlertProps {
  * ### 引用方法
  *
  * ~~~js
- * import { Alert } from 'rosebush'
+ * import { Alert } from 'rosebush-react'
  * ~~~
  */
 declare const Alert: FC<AlertProps>;

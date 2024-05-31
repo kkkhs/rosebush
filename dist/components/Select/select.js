@@ -22,7 +22,7 @@ export var SelectContext = createContext({
  * ### 引用方法
  *
  * ~~~js
- * import { Select } from 'roseship'
+ * import { Select } from 'roseship-react'
  * // 然后可以使用 <Select> 和 <Select.Option>
  * ~~~
  */

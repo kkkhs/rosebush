@@ -16,7 +16,7 @@ export interface IconProps extends FontAwesomeIconProps {
  * ### 引用方法
  *
  * ~~~js
- * import { Icon } from 'rosebush'
+ * import { Icon } from 'rosebush-react'
  * ~~~
  */
 declare const Icon: React.FC<IconProps>;

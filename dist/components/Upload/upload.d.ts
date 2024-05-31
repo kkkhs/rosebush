@@ -82,7 +82,7 @@ export interface UploadProps {
  * ### 引用方法
  *
  * ~~~js
- * import { Upload } from 'rosebush'
+ * import { Upload } from 'rosebush-react'
  * ~~~
  */
 export declare const Upload: ({ action, defaultFileList, children, beforeUpload, onProgress, onSuccess, onError, onChange, onRemove, headers, name, data, withCredentials, accept, multiple, drag, }: UploadProps) => import("react").JSX.Element;

@@ -29,7 +29,7 @@ export interface AutoCompleteProps extends Omit<InputProps, 'onSelect' | 'onChan
  * ### 引用方法
  *
  * ~~~js
- * import { AutoComplete } from 'rosebush'
+ * import { AutoComplete } from 'rosebush-react'
  * ~~~
  */
 export declare const AutoComplete: ({ fetchSuggestions, onSelect, onChange, value, renderOption, ...restProps }: AutoCompleteProps) => React.JSX.Element;

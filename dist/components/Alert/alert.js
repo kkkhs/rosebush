@@ -14,7 +14,7 @@ import Transition from '../Transition/transition';
  * ### 引用方法
  *
  * ~~~js
- * import { Alert } from 'rosebush'
+ * import { Alert } from 'rosebush-react'
  * ~~~
  */
 var Alert = function (_a) {
