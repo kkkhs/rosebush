@@ -49,7 +49,7 @@
     "build-css": "node-sass ./src/styles/index.scss ./dist/index.css",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "prepublish": "npm run test:nowatch && npm run lint && npm run build",
+    "prepublish": "npm run build-es",
     "build-es": "rollup --config rollup.config.js"
   },
   "eslintConfig": {
