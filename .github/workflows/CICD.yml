@@ -15,6 +15,12 @@ jobs:
       - name: 安装依赖
         run: npm install
 
+        # Setup .npmrc file to publish to npm
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16.x'
+          registry-url: 'https://registry.npmjs.org'
+
       - name: 运行publish命令 (其中prepublish 包含了test测试命令、eslint 检查命令和 rollup 打包命令)
         run: npm publish
         env:
