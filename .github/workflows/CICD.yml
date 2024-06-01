@@ -18,5 +18,6 @@ jobs:
       - name: 运行publish命令 (其中prepublish 包含了test测试命令、eslint 检查命令和 rollup 打包命令)
         run: npm publish
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_ACCESS_TOKEN }}
+          # 刚刚设置的 NPM_TOKEN
+          NODE_AUTH_TOKEN: ${{secrets.NPM_ACCESS_TOKEN}}
 
