@@ -37,5 +37,5 @@ export type ButtonProps = Partial<NativeButtonProps & AnchorButtonProps>;
  *
  * ### 组件展示
  */
-declare const Button: ({ btnType, className, disabled, size, children, href, ...restProps }: ButtonProps) => import("react").JSX.Element;
+declare const Button: ({ btnType, className, disabled, size, children, href, ...restProps }: ButtonProps) => import("react/jsx-runtime").JSX.Element;
 export default Button;

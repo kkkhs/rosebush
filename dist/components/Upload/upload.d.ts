@@ -85,5 +85,5 @@ export interface UploadProps {
  * import { Upload } from 'rosebush-react'
  * ~~~
  */
-export declare const Upload: ({ action, defaultFileList, children, beforeUpload, onProgress, onSuccess, onError, onChange, onRemove, headers, name, data, withCredentials, accept, multiple, drag, }: UploadProps) => import("react").JSX.Element;
+export declare const Upload: ({ action, defaultFileList, children, beforeUpload, onProgress, onSuccess, onError, onChange, onRemove, headers, name, data, withCredentials, accept, multiple, drag, }: UploadProps) => import("react/jsx-runtime").JSX.Element;
 export default Upload;

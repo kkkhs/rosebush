@@ -7,5 +7,5 @@ export interface ProgressProps {
     styles?: React.CSSProperties;
     theme?: ThemeProps;
 }
-declare const Progress: ({ percent, strokeHeight, showText, styles, theme, }: ProgressProps) => import("react").JSX.Element;
+declare const Progress: ({ percent, strokeHeight, showText, styles, theme, }: ProgressProps) => import("react/jsx-runtime").JSX.Element;
 export default Progress;

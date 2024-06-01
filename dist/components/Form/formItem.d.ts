@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { CustomRule } from './useStore';
 export type SomeRequired<T, K extends keyof T> = Required<Pick<T, K>> & Omit<T, K>;
 export interface FormItemProps {
@@ -32,5 +32,5 @@ export interface FormItemProps {
      * */
     validateTrigger?: string;
 }
-declare const FormItem: ({ name, label, children, valuePropName, trigger, getValueFromEvent, rules, validateTrigger, }: FormItemProps) => React.JSX.Element;
+declare const FormItem: ({ name, label, children, valuePropName, trigger, getValueFromEvent, rules, validateTrigger, }: FormItemProps) => import("react/jsx-runtime").JSX.Element;
 export default FormItem;
