@@ -1,6 +1,19 @@
 name: Post welcome comment
+
 on:
   pull_request:
     types: [opened]
+
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    steps:
+      - run: pwd
+      - run: ls
+  job2:
+    runs-on: windows-latest
+    steps:
+      - run: node --version
+
 permissions:
   pull-requests: write
