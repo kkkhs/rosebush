@@ -1,9 +1,22 @@
-on: push
+name: 项目自动化打包和部署
+on: 
+    push:
+      branches: [ master ]
 
 jobs:
   npm-build:
+    name: 项目自动化打包部署
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      - run: npm install
-      - run: npm run build-es
+      - name: 读取仓库内容
+        uses: actions/checkout@v4
+      
+      - name: 安装依赖
+        run: npm install
+
+      - name: 运行publish命令 (其中prepublish 包含了test测试命令、eslint 检查命令和 rollup 打包命令)
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_ACCESS_TOKEN }}
+
